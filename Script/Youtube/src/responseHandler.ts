@@ -199,8 +199,8 @@ export class PlayerMessage extends YouTubeMessage {
         for (let i = 0; i < captionTracks.length; i++) {
           const captionTrack = captionTracks[i]
           const currentPriority = captionPriority[captionTrack.languageCode]
-          if (currentPriority && (currentPriority > priority)) {
-            priority = currentPriority
+          if (currentPriority && (currentPriority > priority)) {//增强字幕优先
+            priority = currentPriority //priority肯定等于2或1，等于2说明视频自带此语言字幕，不会走下面if
             targetIndex = i
           }
           captionTrack.isTranslatable = true
@@ -209,7 +209,7 @@ export class PlayerMessage extends YouTubeMessage {
         if (priority !== 2) {
           for (let i = 0; i < captionTargetLang.length; i++) {
             const newCaption = new CaptionTrack({
-              baseUrl: captionTracks[targetIndex].baseUrl + `&tlang=${captionTargetLang[i]}`,
+              baseUrl: captionTracks[targetIndex+i].baseUrl + `&tlang=${captionTargetLang[i]}`,
               name: { runs: [{ text: `@Enhance (${captionTargetLang[i]})` }] },
               vssId: `.${captionTargetLang[i]}`,
               languageCode: captionTargetLang[i]
