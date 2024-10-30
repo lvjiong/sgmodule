@@ -181,7 +181,7 @@ export class PlayerMessage extends YouTubeMessage {
 
   addTranslateCaption (): void {
     const captionTargetLang = this.argument.captionLang as string
-    if (captionTargetLang === 'off') return
+    if (captionTargetLang[captionTargetLang.length - 1] === 'off') return //最后一个是off则返回
 
     this.iterate(this.message, 'captionTracks', (obj, stack) => {
       const captionTracks = obj.captionTracks
@@ -190,7 +190,7 @@ export class PlayerMessage extends YouTubeMessage {
       // 添加默认翻译语言
       if (Array.isArray(captionTracks)) {
         const captionPriority = {
-          [captionTargetLang]: 2,
+          [captionTargetLang[captionTargetLang.length - 1]]: 2,
           en: 1
         }
         let priority = -1
@@ -207,13 +207,15 @@ export class PlayerMessage extends YouTubeMessage {
         }
 
         if (priority !== 2) {
-          const newCaption = new CaptionTrack({
-            baseUrl: captionTracks[targetIndex].baseUrl + `&tlang=${captionTargetLang}`,
-            name: { runs: [{ text: `@Enhance (${captionTargetLang})` }] },
-            vssId: `.${captionTargetLang}`,
-            languageCode: captionTargetLang
-          })
-          captionTracks.push(newCaption)
+          for (let i = 0; i < captionTargetLang.length; i++) {
+            const newCaption = new CaptionTrack({
+              baseUrl: captionTracks[targetIndex].baseUrl + `&tlang=${captionTargetLang[i]}`,
+              name: { runs: [{ text: `@Enhance (${captionTargetLang[i]})` }] },
+              vssId: `.${captionTargetLang[i]}`,
+              languageCode: captionTargetLang[i]
+            })
+            captionTracks.push(newCaption)
+          }
         }
 
         // 开启默认字幕
