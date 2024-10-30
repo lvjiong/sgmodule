@@ -7,6 +7,7 @@ import { Shorts } from '../lib/protobuf/response/shorts_pb'
 import { Guide } from '../lib/protobuf/response/guide_pb'
 import { Player, BackgroundPlayer, TranslationLanguage, CaptionTrack } from '../lib/protobuf/response/player_pb'
 import { Setting, SubSetting, SettingItem } from '../lib/protobuf/response/setting_pb'
+import { Watch } from '../lib/protobuf/response/watch_pb'
 
 import { YouTubeMessage } from './youtube'
 import { $ } from '../lib/env'
@@ -17,7 +18,7 @@ export class BrowseMessage extends YouTubeMessage {
     super(msgType, name)
   }
 
-  async pure (): Promise<this> {
+  async pure (): Promise<YouTubeMessage> {
     this.iterate(this.message, 'richGridContents', (obj) => {
       for (let i = obj.richGridContents.length - 1; i >= 0; i--) {
         this.removeCommonAD(obj, i)
@@ -148,7 +149,7 @@ export class PlayerMessage extends YouTubeMessage {
     super(msgType, name)
   }
 
-  pure (): this {
+  pure (): YouTubeMessage {
     // 去除广告
     if (this.message.adPlacements?.length) {
       this.message.adPlacements.length = 0
@@ -263,7 +264,7 @@ export class ShortsMessage extends YouTubeMessage {
     super(msgType, name)
   }
 
-  pure (): this {
+  pure (): YouTubeMessage {
     const shortsRawLength = this.message.entries?.length
     if (shortsRawLength) {
       for (let i = shortsRawLength - 1; i >= 0; i--) {
@@ -282,7 +283,7 @@ export class GuideMessage extends YouTubeMessage {
     super(msgType, name)
   }
 
-  pure (): this {
+  pure (): YouTubeMessage {
     const blackList = ['SPunlimited']
     if (this.argument.blockUpload) blackList.push('FEuploads')
     if (this.argument.blockImmersive) blackList.push('FEmusic_immersive')
@@ -306,7 +307,7 @@ export class SettingMessage extends YouTubeMessage {
     super(msgType, name)
   }
 
-  pure (): this {
+  pure (): YouTubeMessage {
     // 增加 PIP
     this.iterate(this.message, 'categoryId', (obj) => {
       if (obj.categoryId === 10005) {
@@ -365,6 +366,48 @@ export class SettingMessage extends YouTubeMessage {
     })
     this.message.settingItems.push(fakePlayBackgroundSetting)
     this.needProcess = true
+    return this
+  }
+}
+
+// export class WatchMessage extends PlayerMessage {
+//   constructor (msgType: any = Watch, name: string = 'Watch') {
+//     super(msgType, name)
+//   }
+//
+//   pure (): YouTubeMessage {
+//     const tempMsg = this.message
+//     this.iterate(this.message, 'player', (obj, stack) => {
+//       this.message = obj.player
+//       super.pure()
+//       this.message = tempMsg
+//       stack.length = 0
+//     })
+//     return this
+//   }
+// }
+export class WatchMessage extends YouTubeMessage {
+  player: PlayerMessage
+  next: NextMessage
+
+  constructor (msgType: any = Watch, name: string = 'Watch') {
+    super(msgType, name)
+    this.player = new PlayerMessage()
+    this.next = new NextMessage()
+  }
+
+  async pure (): Promise<YouTubeMessage> {
+    for (const msg of this.message.contents) {
+      if (msg.player) {
+        this.player.message = msg.player
+        await this.player.pure()
+      }
+      if (msg.next) {
+        this.next.message = msg.next
+        await this.next.pure()
+      }
+      this.needProcess = true
+    }
     return this
   }
 }
