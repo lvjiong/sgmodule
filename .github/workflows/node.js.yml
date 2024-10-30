@@ -24,10 +24,11 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
-        cache: 'npm'
+  
+    - name: Switch Directory
+      run: cd ./Script/Youtube
     - name: npm install_build
       run: |
-           echo "NPM_CONFIG_USERCONFIG=${{ github.workspace }}/Script/Youtube" >> $GITHUB_ENV
            npm install
            npm run build
       working-directory: ./Script/Youtube
