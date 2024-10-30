@@ -25,4 +25,9 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+        working-directory: ./Script/Youtube
+    - name: npm install_build
+      run: npm install
+           npm run build
+      working-directory: ./Script/Youtube
 
