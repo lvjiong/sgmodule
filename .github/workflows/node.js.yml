@@ -26,7 +26,9 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - name: npm install_build
-      run: npm install
+      run: |
+           echo "NPM_CONFIG_USERCONFIG=${{ github.workspace }}/Script/Youtube" >> $GITHUB_ENV
+           npm install
            npm run build
       working-directory: ./Script/Youtube
 
