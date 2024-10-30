@@ -27,5 +27,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: cd Script/Youtube
+    - run: npm CI
     - run: npm install
     - run: npm run build
