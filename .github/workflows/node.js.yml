@@ -32,4 +32,6 @@ jobs:
            npm install
            npm run build
       working-directory: ./Script/Youtube
+    - name: git status
+      run: git status .
 
