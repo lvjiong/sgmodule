@@ -34,4 +34,8 @@ jobs:
       working-directory: ./Script/Youtube
     - name: git status
       run: git status .
+    - name: upload build result
+      run: git add .
+           git commit -m "upload Youtube 去广告脚本 $(date '+%Y-%m-%d')"
+           git push
 
