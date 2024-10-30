@@ -27,6 +27,10 @@ jobs:
   
     - name: Switch Directory
       run: cd ./Script/Youtube
+    - name: change remote
+      run: |
+           git remote remove upstream
+           git remote add upstream https://github.com/Maasea/sgmodule.git
     - name: npm install_build
       run: |
            npm install
@@ -41,8 +45,6 @@ jobs:
            git add dist/
            git commit -m "gitAction auto upload Youtube 去广告脚本 $(date '+%Y-%m-%d') $(date +'%H:%M:%S')"
            git push
-           git remote remove upstream
-           git remote add upstream https://github.com/Maasea/sgmodule.git
       working-directory: ./Script/Youtube
       env:
         CI_BRANCH: ${{ github.ref_name }}
