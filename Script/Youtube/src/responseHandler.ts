@@ -185,6 +185,7 @@ export class PlayerMessage extends YouTubeMessage {
       console.log("Test captionTargetLang: " + i + " ->" + captionTracks[i])
     }
     return
+ /*
     if (captionTargetLang[captionTargetLang.length - 1] === 'off') return //最后一个是off则返回
 
     this.iterate(this.message, 'captionTracks', (obj, stack) => {
@@ -256,7 +257,9 @@ export class PlayerMessage extends YouTubeMessage {
         }))
       stack.length = 0
     })
+    */
   }
+  
 }
 
 export class SearchMessage extends BrowseMessage {
