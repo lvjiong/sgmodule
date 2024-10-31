@@ -181,6 +181,9 @@ export class PlayerMessage extends YouTubeMessage {
 
   addTranslateCaption (): void {
     const captionTargetLang = this.argument.captionLang as string
+    for (let i = 0; i < captionTracks.length; i++) {     
+      console.log("Test captionTargetLang: " + i + " ->" + captionTracks[i])
+    }
     if (captionTargetLang[captionTargetLang.length - 1] === 'off') return //最后一个是off则返回
 
     this.iterate(this.message, 'captionTracks', (obj, stack) => {
