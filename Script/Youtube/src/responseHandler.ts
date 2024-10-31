@@ -204,6 +204,7 @@ export class PlayerMessage extends YouTubeMessage {
         for (let i = 0; i < captionTracks.length; i++) {
           const captionTrack = captionTracks[i]
           const currentPriority = captionPriority[captionTrack.languageCode]
+          console.log("7777777777777777777777777777777777captionTracks :" + i + " languageCode:" + captionTrack.languageCode  + " currentPriority:" + currentPriority)
           if (currentPriority && (currentPriority > priority)) {
             priority = currentPriority
             targetIndex = i
@@ -213,7 +214,7 @@ export class PlayerMessage extends YouTubeMessage {
 
         if (priority !== 2) {
           for (let i = 0; i < captionTargetLang.length; i++) {
-            console.log("99999999999999999999999999999999999999999 :" + i)
+            console.log("99999999999999999999999999999999999targetIndex :" + targetIndex)
             const newCaption = new CaptionTrack({
               baseUrl: captionTracks[targetIndex + i].baseUrl + `&tlang=${captionTargetLang[i]}`,
               name: { runs: [{ text: `@Enhance (${captionTargetLang[i]})` }] },
