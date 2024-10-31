@@ -181,11 +181,11 @@ export class PlayerMessage extends YouTubeMessage {
 
   addTranslateCaption (): void {
     const captionTargetLang = this.argument.captionLang as stringArray
-    console.log("8888888888888888888888888888888888888888888888 :" + captionTargetLang.length)
-    for (let i = 0; i < captionTargetLang.length; i++) {     
-      console.log("Test captionTargetLang: " + i + " ->" + captionTargetLang[i])
-    }
-
+    //console.log("8888888888888888888888888888888888888888888888 :" + captionTargetLang.length)
+    //for (let i = 0; i < captionTargetLang.length; i++) {     
+    // console.log("Test captionTargetLang: " + i + " ->" + captionTargetLang[i])
+    //}
+    //return
     if (captionTargetLang[captionTargetLang.length - 1] === 'off') return
 
     this.iterate(this.message, 'captionTracks', (obj, stack) => {
@@ -213,10 +213,11 @@ export class PlayerMessage extends YouTubeMessage {
         }
 
         if (priority !== 2) {
+          let capLen = captionTracks.length
+          console.log("99999999999999999999999999999999999targetIndex =" + targetIndex + " org captionTracks.length=" + capLen)
           for (let i = 0; i < captionTargetLang.length; i++) {
-            console.log("99999999999999999999999999999999999targetIndex :" + targetIndex)
             const newCaption = new CaptionTrack({
-              baseUrl: captionTracks[targetIndex + i].baseUrl + `&tlang=${captionTargetLang[i]}`,
+              baseUrl: captionTracks[capLen + i].baseUrl + `&tlang=${captionTargetLang[i]}`,
               name: { runs: [{ text: `@Enhance (${captionTargetLang[i]})` }] },
               vssId: `.${captionTargetLang[i]}`,
               languageCode: captionTargetLang[i]
@@ -224,7 +225,7 @@ export class PlayerMessage extends YouTubeMessage {
             captionTracks.push(newCaption)
           }
         }
-
+        console.log("0000000000000000000000000000000000000000000captionTracks.length :" + captionTracks.length)
         // 开启默认字幕
         if (Array.isArray(audioTracks)) {
           const trackIndex = priority === 2 ? targetIndex : captionTracks.length - 1
