@@ -200,7 +200,7 @@ export class PlayerMessage extends YouTubeMessage {
         }
         let priority = -1
         let targetIndex = 0
-
+        //查找视频自带字幕是否已支持目标字幕，支持的话后续仍使用视频自带字幕，否则使用Google翻译增强字幕
         for (let i = 0; i < captionTracks.length; i++) {
           const captionTrack = captionTracks[i]
           const currentPriority = captionPriority[captionTrack.languageCode]
@@ -213,11 +213,12 @@ export class PlayerMessage extends YouTubeMessage {
         }
 
         if (priority !== 2) {
-          let capLen = captionTracks.length as int
-          console.log("99999999999999999999999999999999999targetIndex =" + targetIndex + " org captionTracks.length=" + capLen)
+          //走到这里说明目标字幕不是视频自带字幕，targetIndex后续不会用到了
+          targetIndex = captionTracks.length - 1
+          console.log("99999999999999999999999999999999999 newtargetIndex =" + targetIndex + " org captionTracks.length=" + captionTracks.length)
           for (let i = 0; i < captionTargetLang.length; i++) {
             const newCaption = new CaptionTrack({
-              baseUrl: captionTracks[capLen + i].baseUrl + `&tlang=${captionTargetLang[i]}`,
+              baseUrl: captionTracks[targetIndex + i].baseUrl + `&tlang=${captionTargetLang[i]}`,
               name: { runs: [{ text: `@Enhance (${captionTargetLang[i]})` }] },
               vssId: `.${captionTargetLang[i]}`,
               languageCode: captionTargetLang[i]
