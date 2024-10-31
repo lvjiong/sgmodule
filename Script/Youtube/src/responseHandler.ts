@@ -223,9 +223,6 @@ export class PlayerMessage extends YouTubeMessage {
               vssId: `.${captionTargetLang[i]}`,
               languageCode: captionTargetLang[i]
             })
-            if (!audioTracks[i].captionTrackIndices?.includes(targetIndex+i)) {
-              audioTrack[i].captionTrackIndices.push(targetIndex+i)
-            }
             captionTracks.push(newCaption)
           }
         }
@@ -234,8 +231,10 @@ export class PlayerMessage extends YouTubeMessage {
         if (Array.isArray(audioTracks)) {
           const trackIndex = priority === 2 ? targetIndex : captionTracks.length - 1
           for (const audioTrack of audioTracks) {
-            if (!audioTrack.captionTrackIndices?.includes(trackIndex)) {
-              audioTrack.captionTrackIndices.push(trackIndex)
+            for (let i = targetIndex + 1; i < captionTracks.length; i++) {//把新增的字幕添加到音轨
+              if (!audioTrack.captionTrackIndices?.includes(i)) {
+                audioTrack.captionTrackIndices.push(i)
+              }
             }
             audioTrack.defaultCaptionTrackIndex = trackIndex
             audioTrack.captionsInitialState = 3
