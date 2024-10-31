@@ -204,18 +204,18 @@ export class PlayerMessage extends YouTubeMessage {
         for (let i = 0; i < captionTracks.length; i++) {
           const captionTrack = captionTracks[i]
           const currentPriority = captionPriority[captionTrack.languageCode]
-          console.log("7777777777777777777777777777777777captionTracks :" + i + " languageCode:" + captionTrack.languageCode  + " currentPriority:" + currentPriority)
+          //console.log("7777777777777777777777777777777777captionTracks :" + i + " languageCode:" + captionTrack.languageCode  + " currentPriority:" + currentPriority)
           if (currentPriority && (currentPriority > priority)) {
             priority = currentPriority
             targetIndex = i
           }
           captionTrack.isTranslatable = true
         }
-
+        //验证添加多字幕成功，下一步考虑移除上面判断字幕优先级，强制添加自定义字幕，否则若原始视频就带多字幕并且与脚本指定字幕能匹配可能会存在异常
         if (priority !== 2) {
           //走到这里说明目标字幕不是视频自带字幕，targetIndex后续不会用到了
           targetIndex = captionTracks.length -1
-          console.log("99999999999999999999999999999999999 newtargetIndex =" + targetIndex + " org captionTracks.length=" + captionTracks.length)
+          //console.log("99999999999999999999999999999999999 newtargetIndex =" + targetIndex + " org captionTracks.length=" + captionTracks.length)
           for (let i = 0; i < captionTargetLang.length; i++) {
             const newCaption = new CaptionTrack({
               baseUrl: captionTracks[targetIndex].baseUrl + `&tlang=${captionTargetLang[i]}`,
@@ -226,7 +226,7 @@ export class PlayerMessage extends YouTubeMessage {
             captionTracks.push(newCaption)
           }
         }
-        console.log("0000000000000000000000000000000000000000000captionTracks.length :" + captionTracks.length)
+        //console.log("0000000000000000000000000000000000000000000captionTracks.length :" + captionTracks.length)
         // 开启默认字幕
         if (Array.isArray(audioTracks)) {
           const trackIndex = priority === 2 ? targetIndex : captionTracks.length - 1
