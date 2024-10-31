@@ -214,15 +214,18 @@ export class PlayerMessage extends YouTubeMessage {
 
         if (priority !== 2) {
           //走到这里说明目标字幕不是视频自带字幕，targetIndex后续不会用到了
-          targetIndex = captionTracks.length
+          targetIndex = captionTracks.length -1
           console.log("99999999999999999999999999999999999 newtargetIndex =" + targetIndex + " org captionTracks.length=" + captionTracks.length)
           for (let i = 0; i < captionTargetLang.length; i++) {
             const newCaption = new CaptionTrack({
-              baseUrl: captionTracks[targetIndex + i].baseUrl + `&tlang=${captionTargetLang[i]}`,
+              baseUrl: captionTracks[targetIndex].baseUrl + `&tlang=${captionTargetLang[i]}`,
               name: { runs: [{ text: `@Enhance (${captionTargetLang[i]})` }] },
               vssId: `.${captionTargetLang[i]}`,
               languageCode: captionTargetLang[i]
             })
+            if (!audioTracks[i].captionTrackIndices?.includes(targetIndex+i)) {
+              audioTrack[i].captionTrackIndices.push(targetIndex+i)
+            }
             captionTracks.push(newCaption)
           }
         }
