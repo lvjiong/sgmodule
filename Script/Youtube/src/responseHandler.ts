@@ -213,7 +213,7 @@ export class PlayerMessage extends YouTubeMessage {
         }
 
         if (priority !== 2) {
-          let capLen = captionTracks.length
+          let capLen = captionTracks.length as int
           console.log("99999999999999999999999999999999999targetIndex =" + targetIndex + " org captionTracks.length=" + capLen)
           for (let i = 0; i < captionTargetLang.length; i++) {
             const newCaption = new CaptionTrack({
