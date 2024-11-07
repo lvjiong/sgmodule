@@ -204,7 +204,7 @@ export class PlayerMessage extends YouTubeMessage {
         for (let i = 0; i < captionTracks.length; i++) {
           const captionTrack = captionTracks[i]
           const currentPriority = captionPriority[captionTrack.languageCode]
-          console.log("7777777777777777777777777777777777captionTracks :" + i + " languageCode:" + captionTrack.languageCode  + " currentPriority:" + currentPriority)
+          //console.log("7777777777777777777777777777777777captionTracks :" + i + " languageCode:" + captionTrack.languageCode  + " currentPriority:" + currentPriority)
           if (currentPriority && (currentPriority > priority)) {
             priority = currentPriority
             targetIndex = i
@@ -231,9 +231,11 @@ export class PlayerMessage extends YouTubeMessage {
         if (Array.isArray(audioTracks)) {
           const trackIndex = priority === 2 ? targetIndex : captionTracks.length - 1
           for (const audioTrack of audioTracks) {
-            for (let i = targetIndex + 1; i < captionTracks.length; i++) {//把新增的字幕添加到音轨
-              if (!audioTrack.captionTrackIndices?.includes(i)) {
-                audioTrack.captionTrackIndices.push(i)
+            if (priority!=2) {//priority!=2 说明新增了字幕
+              for (let i = targetIndex + 1; i < captionTracks.length; i++) {//把新增的字幕添加到音轨
+                if (!audioTrack.captionTrackIndices?.includes(i)) {
+                  audioTrack.captionTrackIndices.push(i)
+                }
               }
             }
             audioTrack.defaultCaptionTrackIndex = trackIndex
