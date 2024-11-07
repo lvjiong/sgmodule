@@ -195,7 +195,7 @@ export class PlayerMessage extends YouTubeMessage {
       // 添加默认翻译语言
       if (Array.isArray(captionTracks)) {
         const captionPriority = {
-          [captionTargetLang[captionTargetLang.length - 1]]: 2,
+          [${captionTargetLang[captionTargetLang.length - 1]}]: 2,
           en: 1
         }
         let priority = -1
