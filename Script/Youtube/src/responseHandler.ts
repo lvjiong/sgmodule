@@ -198,6 +198,11 @@ export class PlayerMessage extends YouTubeMessage {
           [captionTargetLang[captionTargetLang.length - 1]]: 2,
           en: 1
         }
+        for (let key in captionPriority) {
+          if (captionPriority.hasOwnProperty(key)) { // 确保是对象自有属性
+              console.log("66666666666666666666666666666666666666 captionPriority:" + key + ': ' + captionPriority[key]);
+          }
+        }
         console.log("66666666666666666666666666666666666666 captionPriority:" + captionPriority);
         let priority = -1
         let targetIndex = 0
