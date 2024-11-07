@@ -199,12 +199,12 @@ export class PlayerMessage extends YouTubeMessage {
           [defaultLan]: 2,
           en: 1
         }
-        console.log("66666666666666666666666666666666666666 defaultLan:" + defaultLan);
-        for (let key in captionPriority) {
-          if (captionPriority.hasOwnProperty(key)) { // 确保是对象自有属性
-              console.log("66666666666666666666666666666666666666 captionPriority:" + key + ': ' + captionPriority[key]);
-          }
-        }
+        //console.log("66666666666666666666666666666666666666 defaultLan:" + defaultLan)
+        //for (let key in captionPriority) {
+        //  if (captionPriority.hasOwnProperty(key)) { // 确保是对象自有属性
+         //     console.log("66666666666666666666666666666666666666 captionPriority:" + key + ': ' + captionPriority[key])
+          //}
+        //}
         let priority = -1
         let targetIndex = 0
         //查找视频自带字幕是否已支持目标字幕，支持的话后续仍使用视频自带字幕，否则使用Google翻译增强字幕
