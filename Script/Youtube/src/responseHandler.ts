@@ -197,7 +197,7 @@ export class PlayerMessage extends YouTubeMessage {
       if (Array.isArray(captionTracks)) {
         const captionPriority = {
           [defaultLan]: 2,
-          en: 1
+         // en: 1 //默认语言是en导致key重复，优先级仍为1
         }
         //console.log("66666666666666666666666666666666666666 defaultLan:" + defaultLan)
         //for (let key in captionPriority) {
