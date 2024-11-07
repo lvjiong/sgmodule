@@ -198,7 +198,7 @@ export class PlayerMessage extends YouTubeMessage {
           [captionTargetLang[captionTargetLang.length - 1]]: 2,
           en: 1
         }
-        console.log("66666666666666666666666666666666666666 captionPriority: + captionPriority);
+        console.log("66666666666666666666666666666666666666 captionPriority:" + captionPriority);
         let priority = -1
         let targetIndex = 0
         //查找视频自带字幕是否已支持目标字幕，支持的话后续仍使用视频自带字幕，否则使用Google翻译增强字幕
