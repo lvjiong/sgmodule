@@ -204,7 +204,7 @@ export class PlayerMessage extends YouTubeMessage {
         for (let i = 0; i < captionTracks.length; i++) {
           const captionTrack = captionTracks[i]
           const currentPriority = captionPriority[captionTrack.languageCode]
-          //console.log("7777777777777777777777777777777777captionTracks :" + i + " languageCode:" + captionTrack.languageCode  + " currentPriority:" + currentPriority)
+          console.log("7777777777777777777777777777777777captionTracks :" + i + " languageCode:" + captionTrack.languageCode  + " currentPriority:" + currentPriority)
           if (currentPriority && (currentPriority > priority)) {
             priority = currentPriority
             targetIndex = i
