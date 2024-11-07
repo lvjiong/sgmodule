@@ -186,7 +186,8 @@ export class PlayerMessage extends YouTubeMessage {
     // console.log("Test captionTargetLang: " + i + " ->" + captionTargetLang[i])
     //}
     //return
-    if (captionTargetLang[captionTargetLang.length - 1] === 'off') return
+    let defaultLan = captionTargetLang && captionTargetLang.length > 0 ? captionTargetLang[captionTargetLang.length - 1] : "zh-Hans"
+    if (defaultLan === 'off') return
 
     this.iterate(this.message, 'captionTracks', (obj, stack) => {
       const captionTracks = obj.captionTracks
@@ -195,7 +196,7 @@ export class PlayerMessage extends YouTubeMessage {
       // 添加默认翻译语言
       if (Array.isArray(captionTracks)) {
         const captionPriority = {
-          zh-Hans: 2,
+          [defaultLan]: 2,
           en: 1
         }
         for (let key in captionPriority) {
